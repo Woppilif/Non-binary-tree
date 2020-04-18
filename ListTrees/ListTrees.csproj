@@ -9,4 +9,10 @@
     <ProjectReference Include="..\ListTreesLibrary\ListTreesLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TextFile.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

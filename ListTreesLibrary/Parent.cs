@@ -2,7 +2,7 @@
 
 namespace ListTreesLibrary
 {
-    public class Parent<T>: IComparable<Parent<T>> 
+    public class Parent<T>
     {
         public T Value { get; set; }
 
@@ -14,11 +14,17 @@ namespace ListTreesLibrary
             Children = new CustomList<Child<T>>();
         }
 
-        int IComparable<Parent<T>>.CompareTo(Parent<T> other)
+        public override bool Equals(object obj)
         {
-            if (other == null) return 1;
-            if (Value.Equals(other.Value)) return 0;
-            return 1;
+            var temp = obj as Parent<T>;
+            if (temp == null) return false;
+            if (temp.Value.GetHashCode() == this.Value.GetHashCode()) return true;
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.Value.GetHashCode();
         }
     }
 }

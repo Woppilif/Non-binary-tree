@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ListTreesLibrary
 {
-    public class CustomList<TItem> : IEnumerable<TItem> where TItem : IComparable<TItem>
+    public class CustomList<TItem> : IEnumerable<TItem>
     {
         public TItem Value { get; set; }
         public CustomList<TItem> Next { get; set; }
@@ -24,7 +24,7 @@ namespace ListTreesLibrary
         public CustomList<TItem> Append(TItem value)
         {
             CustomList<TItem> currentValue = this;
-            if(currentValue.Prev == null && (currentValue.Value == null || currentValue.Value.CompareTo(default) == 0)) //&& 
+            if(currentValue.Prev == null && (currentValue.Value == null || currentValue.Value.Equals(default))) //&& 
             {
                 currentValue.Value = value;
                 return currentValue;
@@ -46,7 +46,7 @@ namespace ListTreesLibrary
             while(currentValue != null)
             {
                 if (currentValue.Value == null) return null;
-                if (currentValue.Value.CompareTo(value) == 0) return currentValue;
+                if (currentValue.Value.Equals(value)) return currentValue;
                 currentValue = currentValue.Next;
             }
             return null;
@@ -56,7 +56,7 @@ namespace ListTreesLibrary
         {
             CustomList<TItem> currentValue = Search(value);
             if (currentValue == null) return false;
-            if (currentValue.Value.CompareTo(value) == 0)
+            if (currentValue.Value.Equals(value))
             {
                 if (currentValue.Prev == null)
                 {

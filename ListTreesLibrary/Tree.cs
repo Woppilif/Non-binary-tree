@@ -4,25 +4,25 @@ using System.Collections.Generic;
 
 namespace ListTreesLibrary
 {
-    public class Tree<T> : IEnumerable<T> where T : IComparable<T>
+    public class Tree<T> : IEnumerable<T>
     {
         public CustomList<Parent<T>> vs = new CustomList<Parent<T>>();
 
-        public void Add(T item,T parent)
+        public void Add(T item, T parent)
         {
-            if(vs.Value == null)
+            if (vs.Value == null)
             {
                 vs.Append(new Parent<T>(parent));
                 return;
             }
             var citem = vs.Search(new Parent<T>(parent));
-            if(citem == null)
+            if (citem == null)
             {
                 Child<T> tempChild = new Child<T>(parent);
-                foreach(var parent1 in vs)
+                foreach (var parent1 in vs)
                 {
                     var res = parent1.Children.Search(tempChild);
-                    if(res != null)
+                    if (res != null)
                     {
                         Parent<T> parent2 = new Parent<T>(parent);
                         vs.Append(parent2);
