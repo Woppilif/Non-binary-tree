@@ -1,33 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿
+using System;
+using System.IO;
 using System.Text;
 
 namespace ListTrees
 {
     class Element
     {
-        public int MyProperty { get; private set; }
-        public Element(int x)
+        public FileStream MyProperty { get; private set; }
+        public Element(string name)
         {
-            MyProperty = x;
+            MyProperty = CreateFile("files/"+name);
+        }
+
+        public Element()
+        {
+
         }
 
         public override string ToString()
         {
-            return MyProperty.ToString();
+            return MyProperty.Name.ToString();
         }
 
-        //public override bool Equals(object obj)
-        //{
-        //    var temp = obj as Element;
-        //    if (temp.MyProperty == this.MyProperty) return true;
-        //    return false;
-        //}
+        public override int GetHashCode()
+        {
+            return MyProperty.Name.GetHashCode();
+        }
 
-        //public override int GetHashCode()
-        //{
-        //    return this.MyProperty.GetHashCode();
-        //}
+        static FileStream CreateFile(string name)
+        {
+            using (FileStream fs = File.Create(name))
+            {
+                AddText(fs, "This is some text");
+                AddText(fs, "This is some more text,");
+                AddText(fs, "\r\nand this is on a new line");
+                AddText(fs, "\r\n\r\nThe following is a subset of characters:\r\n");
+
+                for (int i = 1; i < 120; i++)
+                {
+                    AddText(fs, Convert.ToChar(i).ToString());
+                }
+                return fs;
+            }
+        }
+
+        private static void AddText(FileStream fs, string value)
+        {
+            byte[] info = new UTF8Encoding(true).GetBytes(value);
+            fs.Write(info, 0, info.Length);
+        }
     }
 }

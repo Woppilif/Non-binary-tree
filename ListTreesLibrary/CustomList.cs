@@ -4,27 +4,46 @@ using System.Collections.Generic;
 
 namespace ListTreesLibrary
 {
+    /// <summary>
+    /// Основной класс, реализующий двунаправленный несвязный список
+    /// </summary>
+    /// <typeparam name="TItem"></typeparam>
     public class CustomList<TItem> : IEnumerable<TItem>
     {
         public TItem Value { get; set; }
         public CustomList<TItem> Next { get; set; }
         public CustomList<TItem> Prev { get; set; }
+
+        /// <summary>
+        /// Конструктор без параметров
+        /// </summary>
         public CustomList()
         {
             Value = default;
             Next = null;
             Prev = null;
         }
+
+        /// <summary>
+        /// Конструктор с параметром - входным значением любого типа
+        /// </summary>
+        /// <param name="item"></param>
         public CustomList(TItem item)
         {
             Value = item;
             Next = null;
             Prev = null;
         }
+
+        /// <summary>
+        /// Добавление в конец списка
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>Созданный объект или null</returns>
         public CustomList<TItem> Append(TItem value)
         {
             CustomList<TItem> currentValue = this;
-            if(currentValue.Prev == null && (currentValue.Value == null || currentValue.Value.Equals(default))) //&& 
+            if(currentValue.Prev == null && (currentValue.Value == null || currentValue.Value.Equals(default)))
             {
                 currentValue.Value = value;
                 return currentValue;
@@ -40,6 +59,11 @@ namespace ListTreesLibrary
             return null;
         }
 
+        /// <summary>
+        /// Поиск искомого объекта
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public CustomList<TItem> Search(TItem value)
         {
             CustomList<TItem> currentValue = this;
@@ -52,6 +76,11 @@ namespace ListTreesLibrary
             return null;
         }
 
+        /// <summary>
+        /// Удаление искомого объекта
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public bool Delete(TItem value)
         {
             CustomList<TItem> currentValue = Search(value);
@@ -74,6 +103,12 @@ namespace ListTreesLibrary
             }
             return true;
         }
+
+        /// <summary>
+        /// Удаление ссылочных связей между элементами списка
+        /// </summary>
+        /// <param name="currentValue"></param>
+        /// <returns></returns>
         private bool DeleteLinks(CustomList<TItem> currentValue)
         {
             if (currentValue.Next != null)
@@ -82,6 +117,11 @@ namespace ListTreesLibrary
                 currentValue.Prev.Next = currentValue.Next;
             return true;
         }
+
+        /// <summary>
+        /// Итератор для прохода по элементам
+        /// </summary>
+        /// <returns></returns>
         IEnumerator<TItem> IEnumerable<TItem>.GetEnumerator()
         {
             yield return this.Value;

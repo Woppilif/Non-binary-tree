@@ -4,84 +4,75 @@ namespace ListTrees
 {
     class Program
     {
+        static Tree<Element> vs = new Tree<Element>();
         static void Main(string[] args)
         {
-            Random random = new Random(11111);
-            Tree<int> vs = new Tree<int>
+            Random random = new Random(1111);
+            for (int i = 0; i < 10; i++)
             {
-                { 1, 1 },
-                { 2, 1 },
-                { 3, 1 },
-                { 4, 2 },
-                { 5, 2 },
-                { 55, 2 },
-                { 56, 2 },
-                { 6, 3 },
-                { 7, 3 },
-                { 8, 4 },
-                { 9, 4 },
-                { 10, 5 },
-                { 11, 5 },
-
-                { 110, 55 },
-                { 111, 55 },
-                { 210, 56 },
-                { 211, 56 }
-            };
-
-            int root, times;
-            while (true)
-            {
-                string input = Console.ReadLine();
-                switch (input)
+                for (int x = 0; x < 10; x++)
                 {
-                    case "a":
-                        root = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine(">");
-                        times = Convert.ToInt32(Console.ReadLine());
-                        for (int i = 0; i < times; i++)
-                        {
-                            vs.Add(
-                                random.Next(root * 10, root * 10 * 4),
-                                root
-                            );
-                        }
-                        Console.WriteLine("ok");
-                        break;
-                    case "o":
-                        foreach (var item in vs.vs)
-                        {
-                            if (item != null)
-                            {
-                                Console.WriteLine($"p: {item.Value}");
-                                foreach (var child in item.Children)
-                                {
-                                    if (child != null)
-                                        Console.WriteLine($"\t{child.Value}");
-                                }
-                            }
-                        }
-                        break;
-                    case "d":
-
-                        vs.Delete(
-                        Convert.ToInt32(Console.ReadLine())
-                        );
-
-
-                        break;
-                    case "s":
-                        Console.WriteLine(
-                            vs.Search(
-                            Convert.ToInt32(Console.ReadLine())
-                            )
-
-                            );
-                        break;
-
+                    Add($"Hello_{x}", $"Hello_{i}");
                 }
+                
             }
+            
+
+
+            Out();
+
+            //Console.WriteLine("delete------------------------------------");
+
+            vs.Delete(vs.Search(new Element("Hello_9")));
+            Out();
+
+            vs.Delete(vs.Search(new Element("Hello_7")));
+            Out();
+
+            Add($"Hello_9", $"Hello_6");
+            Console.WriteLine("------------------------------------");
+            Out();
+
+            Console.WriteLine("------------------------------------");
+            vs.Delete(vs.Search(new Element("Hello_6")));
+            Out();
+
 
         }
+
+        static void Out()
+        {
+            foreach (var item in vs.vs)
+            {
+                Console.WriteLine($"Parent {item.Value.MyProperty.Name}");
+
+                Console.WriteLine("Children:");
+                foreach (var item2 in item.Children)
+                {
+                    if (item2 != null)
+                    {
+                        Console.WriteLine(item2.Value.MyProperty.Name);
+                    }
+                }
+
+            }
+        }
+        
+        static void Add(string child, string parent)
+        {
+            var el = new Element(child);
+            var p = new Element(parent);
+            var s = vs.Search(el);
+            if (s == null)
+            {
+                var res = vs.Add(el, p);
+                if (res == false)
+                {
+                    Console.WriteLine($"false w {p} & {el}");
+                }
+            }
+        }
+
+
     }
 }
