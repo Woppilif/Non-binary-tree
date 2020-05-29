@@ -2,15 +2,20 @@
 using System;
 using System.IO;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace ListTrees
 {
+    
     class Element
     {
+        [JsonProperty]
+        public string MyProperty2 { get; private set; }
         public FileStream MyProperty { get; private set; }
         public Element(string name)
         {
-            MyProperty = CreateFile("files/"+name);
+            MyProperty2 = name;
+            //MyProperty = CreateFile("files/"+name);
         }
 
         public Element()
@@ -20,7 +25,7 @@ namespace ListTrees
 
         public override string ToString()
         {
-            return MyProperty.Name.ToString();
+            return MyProperty2.ToString();
         }
 
         public override int GetHashCode()

@@ -8,11 +8,15 @@ namespace ListTreesLibrary
     /// Основной класс, реализующий двунаправленный несвязный список
     /// </summary>
     /// <typeparam name="TItem"></typeparam>
-    public class CustomList<TItem> : IEnumerable<TItem>
+    public class CustomList<TItem> : IEnumerable<TItem>, ICollection<TItem>
     {
         public TItem Value { get; set; }
         public CustomList<TItem> Next { get; set; }
         public CustomList<TItem> Prev { get; set; }
+
+        public int Count { get; set; }
+
+        public bool IsReadOnly { get; set; }
 
         /// <summary>
         /// Конструктор без параметров
@@ -137,7 +141,40 @@ namespace ListTreesLibrary
         }
         IEnumerator IEnumerable.GetEnumerator()
         {
+            yield return this.Value;
+
+            if (this.Next != null)
+            {
+                foreach (TItem item in this.Next)
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        public void Add(TItem item)
+        {
+            this.Append(item);
+        }
+
+        public void Clear()
+        {
             throw new NotImplementedException();
-        } 
+        }
+
+        public bool Contains(TItem item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CopyTo(TItem[] array, int arrayIndex)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Remove(TItem item)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
